@@ -9,7 +9,7 @@ import com.rlonghi.curso.entidades.Usuario;
 
 @RestController
 @RequestMapping(value = "/usuarios")
-public class RucursoUsuario {
+public class RecursoUsuario {
 
 	@GetMapping
 	public ResponseEntity<Usuario> buscarTodos() {
