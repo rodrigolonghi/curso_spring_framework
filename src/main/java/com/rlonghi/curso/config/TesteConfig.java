@@ -10,11 +10,13 @@ import org.springframework.context.annotation.Profile;
 
 import com.rlonghi.curso.entidades.Categoria;
 import com.rlonghi.curso.entidades.Pedido;
+import com.rlonghi.curso.entidades.PedidoItem;
 import com.rlonghi.curso.entidades.Produto;
 import com.rlonghi.curso.entidades.Usuario;
 import com.rlonghi.curso.entidades.enums.StatusPedido;
 import com.rlonghi.curso.repositorios.RepositorioCategoria;
 import com.rlonghi.curso.repositorios.RepositorioPedido;
+import com.rlonghi.curso.repositorios.RepositorioPedidoItem;
 import com.rlonghi.curso.repositorios.RepositorioProduto;
 import com.rlonghi.curso.repositorios.RepositorioUsuario;
 
@@ -34,6 +36,9 @@ public class TesteConfig implements CommandLineRunner {
 	@Autowired
 	private RepositorioProduto repositorioProduto;
 
+	@Autowired
+	private RepositorioPedidoItem repositorioPedidoItem;
+
 	@Override
 	public void run(String... args) throws Exception {
 
@@ -49,14 +54,14 @@ public class TesteConfig implements CommandLineRunner {
 
 		repositorioCategoria.saveAll(Arrays.asList(cat1, cat2, cat3));
 		repositorioProduto.saveAll(Arrays.asList(pr1, pr2, pr3, pr4, pr5));
-		
+
 		pr1.getCategorias().add(cat2);
 		pr2.getCategorias().add(cat1);
 		pr2.getCategorias().add(cat3);
 		pr3.getCategorias().add(cat3);
 		pr4.getCategorias().add(cat3);
 		pr5.getCategorias().add(cat2);
-		
+
 		repositorioProduto.saveAll(Arrays.asList(pr1, pr2, pr3, pr4, pr5));
 
 		Usuario u1 = new Usuario(null, "Maria Brown", "maria@gmail.com", "988888888", "123456");
@@ -67,6 +72,13 @@ public class TesteConfig implements CommandLineRunner {
 
 		repositorioUsuario.saveAll(Arrays.asList(u1, u2));
 		respositorioPedido.saveAll(Arrays.asList(p1, p2, p3));
+
+		PedidoItem pi1 = new PedidoItem(p1, pr1, 2, pr1.getPreco());
+		PedidoItem pi2 = new PedidoItem(p1, pr3, 1, pr3.getPreco());
+		PedidoItem pi3 = new PedidoItem(p2, pr3, 2, pr3.getPreco());
+		PedidoItem pi4 = new PedidoItem(p3, pr5, 2, pr5.getPreco());
+
+		repositorioPedidoItem.saveAll(Arrays.asList(pi1, pi2, pi3, pi4));
 	}
 
 }
