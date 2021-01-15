@@ -83,7 +83,7 @@ public class TesteConfig implements CommandLineRunner {
 
 		Pagamento pag1 = new Pagamento(null, Instant.parse("2019-06-20T21:53:07Z"), p1);
 		p1.setPagamento(pag1);
-		
+
 		respositorioPedido.save(p1);
 	}
 
