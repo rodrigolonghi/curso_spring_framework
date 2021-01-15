@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
 import com.rlonghi.curso.entidades.Categoria;
+import com.rlonghi.curso.entidades.Pagamento;
 import com.rlonghi.curso.entidades.Pedido;
 import com.rlonghi.curso.entidades.PedidoItem;
 import com.rlonghi.curso.entidades.Produto;
@@ -79,6 +80,11 @@ public class TesteConfig implements CommandLineRunner {
 		PedidoItem pi4 = new PedidoItem(p3, pr5, 2, pr5.getPreco());
 
 		repositorioPedidoItem.saveAll(Arrays.asList(pi1, pi2, pi3, pi4));
+
+		Pagamento pag1 = new Pagamento(null, Instant.parse("2019-06-20T21:53:07Z"), p1);
+		p1.setPagamento(pag1);
+		
+		respositorioPedido.save(p1);
 	}
 
 }
