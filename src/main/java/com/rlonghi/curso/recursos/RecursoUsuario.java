@@ -43,15 +43,15 @@ public class RecursoUsuario {
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).body(obj);
 	}
-	
+
 	@DeleteMapping(value = "/{id}")
-	public ResponseEntity<Void> deletar(@PathVariable Long id){
+	public ResponseEntity<Void> deletar(@PathVariable Long id) {
 		servico.deletar(id);
 		return ResponseEntity.noContent().build();
 	}
-	
+
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<Usuario> atualizar(@PathVariable Long id, @RequestBody Usuario obj){
+	public ResponseEntity<Usuario> atualizar(@PathVariable Long id, @RequestBody Usuario obj) {
 		obj = servico.atualizar(id, obj);
 		return ResponseEntity.ok().body(obj);
 	}

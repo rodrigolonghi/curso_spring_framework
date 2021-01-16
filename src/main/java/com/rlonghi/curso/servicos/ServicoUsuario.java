@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.rlonghi.curso.entidades.Usuario;
 import com.rlonghi.curso.repositorios.RepositorioUsuario;
+import com.rlonghi.curso.servicos.excecoes.ExcecaoRecursoNaoEncontrado;
 
 @Service
 public class ServicoUsuario {
@@ -21,17 +22,17 @@ public class ServicoUsuario {
 
 	public Usuario buscarPorId(Long id) {
 		Optional<Usuario> obj = repositorio.findById(id);
-		return obj.get();
+		return obj.orElseThrow(() -> new ExcecaoRecursoNaoEncontrado(id));
 	}
-	
+
 	public Usuario inserir(Usuario obj) {
 		return repositorio.save(obj);
 	}
-	
+
 	public void deletar(Long id) {
 		repositorio.deleteById(id);
 	}
-	
+
 	public Usuario atualizar(Long id, Usuario obj) {
 		Usuario entidade = repositorio.getOne(id);
 		atualizarDados(entidade, obj);
