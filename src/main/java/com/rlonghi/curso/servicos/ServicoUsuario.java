@@ -4,10 +4,13 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.rlonghi.curso.entidades.Usuario;
 import com.rlonghi.curso.repositorios.RepositorioUsuario;
+import com.rlonghi.curso.servicos.excecoes.ExcecaoBancoDeDados;
 import com.rlonghi.curso.servicos.excecoes.ExcecaoRecursoNaoEncontrado;
 
 @Service
@@ -30,7 +33,13 @@ public class ServicoUsuario {
 	}
 
 	public void deletar(Long id) {
-		repositorio.deleteById(id);
+		try {
+			repositorio.deleteById(id);
+		} catch (EmptyResultDataAccessException e) {
+			throw new ExcecaoRecursoNaoEncontrado(id);
+		} catch (DataIntegrityViolationException e) {
+			throw new ExcecaoBancoDeDados(e.getMessage());
+		}
 	}
 
 	public Usuario atualizar(Long id, Usuario obj) {
